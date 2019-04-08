@@ -1,0 +1,16 @@
+PODS:
+  - PokemonAPI (3.0.0)
+
+DEPENDENCIES:
+  - PokemonAPI
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - PokemonAPI
+
+SPEC CHECKSUMS:
+  PokemonAPI: 03e8fc4fe880f73a5a600d6405310a636cc65107
+
+PODFILE CHECKSUM: 04a197e3d48488e582d40626d220f7450a107404
+
+COCOAPODS: 1.6.1

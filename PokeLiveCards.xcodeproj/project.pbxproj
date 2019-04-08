@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		705B6DE8F4CC3FCDE2B5BC76 /* Pods_PokeLiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3214F4EE4734E4AF213CF9AA /* Pods_PokeLiveCards.framework */; };
 		E2C15065225AF1E300927F98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C15064225AF1E300927F98 /* AppDelegate.swift */; };
 		E2C15067225AF1E300927F98 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C15066225AF1E300927F98 /* art.scnassets */; };
 		E2C15069225AF1E300927F98 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C15068225AF1E300927F98 /* ViewController.swift */; };
@@ -16,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D2E45DFED7164DFD4096505 /* Pods-PokeLiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeLiveCards.debug.xcconfig"; path = "Target Support Files/Pods-PokeLiveCards/Pods-PokeLiveCards.debug.xcconfig"; sourceTree = "<group>"; };
+		3214F4EE4734E4AF213CF9AA /* Pods_PokeLiveCards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PokeLiveCards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E09F09D101F5E2AFBBDFF1B3 /* Pods-PokeLiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeLiveCards.release.xcconfig"; path = "Target Support Files/Pods-PokeLiveCards/Pods-PokeLiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		E2C15061225AF1E300927F98 /* PokeLiveCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeLiveCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C15064225AF1E300927F98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2C15066225AF1E300927F98 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -31,17 +35,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				705B6DE8F4CC3FCDE2B5BC76 /* Pods_PokeLiveCards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D6F2320923B4CA39337F62F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3214F4EE4734E4AF213CF9AA /* Pods_PokeLiveCards.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8B48AC514FF49E84B2A2F63C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2D2E45DFED7164DFD4096505 /* Pods-PokeLiveCards.debug.xcconfig */,
+				E09F09D101F5E2AFBBDFF1B3 /* Pods-PokeLiveCards.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E2C15058225AF1E300927F98 = {
 			isa = PBXGroup;
 			children = (
 				E2C15063225AF1E300927F98 /* PokeLiveCards */,
 				E2C15062225AF1E300927F98 /* Products */,
+				3D6F2320923B4CA39337F62F /* Frameworks */,
+				8B48AC514FF49E84B2A2F63C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,9 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2C15075225AF1ED00927F98 /* Build configuration list for PBXNativeTarget "PokeLiveCards" */;
 			buildPhases = (
+				9EB0BC37AFD7B71ADA950136 /* [CP] Check Pods Manifest.lock */,
 				E2C1505D225AF1E300927F98 /* Sources */,
 				E2C1505E225AF1E300927F98 /* Frameworks */,
 				E2C1505F225AF1E300927F98 /* Resources */,
+				78E38D54DC8500D32E50953F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +159,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		78E38D54DC8500D32E50953F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PokeLiveCards/Pods-PokeLiveCards-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PokemonAPI/PokemonAPI.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PokemonAPI.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PokeLiveCards/Pods-PokeLiveCards-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9EB0BC37AFD7B71ADA950136 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PokeLiveCards-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E2C1505D225AF1E300927F98 /* Sources */ = {
@@ -284,16 +357,17 @@
 		};
 		E2C15076225AF1ED00927F98 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D2E45DFED7164DFD4096505 /* Pods-PokeLiveCards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BD3X3H45C9;
+				DEVELOPMENT_TEAM = 398YP7754U;
 				INFOPLIST_FILE = PokeLiveCards/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Lambton.PokeLiveCards;
+				PRODUCT_BUNDLE_IDENTIFIER = com.PokeLiveCards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -302,16 +376,17 @@
 		};
 		E2C15077225AF1ED00927F98 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E09F09D101F5E2AFBBDFF1B3 /* Pods-PokeLiveCards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BD3X3H45C9;
+				DEVELOPMENT_TEAM = 398YP7754U;
 				INFOPLIST_FILE = PokeLiveCards/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Lambton.PokeLiveCards;
+				PRODUCT_BUNDLE_IDENTIFIER = com.PokeLiveCards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
