@@ -6,6 +6,8 @@ target 'PokeLiveCards' do
   use_frameworks!
 
   # Pods for PokeLiveCards
-  pod 'PokemonAPI'
+	pod 'PokemonAPI'
+	pod 'Alamofire', '~> 4.7'
+	pod 'SwiftyJSON', '~> 4.0'
 
 end

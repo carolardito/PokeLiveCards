@@ -1,16 +1,24 @@
 PODS:
+  - Alamofire (4.8.2)
   - PokemonAPI (3.0.0)
+  - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.7)
   - PokemonAPI
+  - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - PokemonAPI
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   PokemonAPI: 03e8fc4fe880f73a5a600d6405310a636cc65107
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 04a197e3d48488e582d40626d220f7450a107404
+PODFILE CHECKSUM: 15357f05a2846b52f54cc8f0b2693712736d62cb
 
 COCOAPODS: 1.6.1
