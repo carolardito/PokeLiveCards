@@ -22,12 +22,13 @@ class FindPokeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Poke name identificado = \(pokeNameIdentificado!)")
+        //print("Poke name identificado = \(pokeNameIdentificado!)")
         if (pokeNameIdentificado != nil) {
             pokeNameTxt.text = pokeNameIdentificado
-            pokeNameTxt.isEnabled = false
+             pokeNameTxt.isEnabled = false
+            findInfoPoke()
         }else{
-            pokeNameTxt.isEnabled = true
+            //pokeNameTxt.isEnabled = true
         }
         
 
@@ -35,7 +36,10 @@ class FindPokeViewController: UIViewController {
     }
     
     @IBAction func findPokeBtn(_ sender: Any) {
-        
+        findInfoPoke()
+    }
+    
+    func findInfoPoke(){
         let URL = "https://pokeapi.co/api/v2/pokemon/" + pokeNameTxt.text!
         
         // ALAMOFIRE function: get the data from the website

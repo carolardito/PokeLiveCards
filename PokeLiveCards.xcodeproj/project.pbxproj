@@ -15,7 +15,6 @@
 		E2C1506C225AF1E300927F98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2C1506A225AF1E300927F98 /* Main.storyboard */; };
 		E2C1506E225AF1ED00927F98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C1506D225AF1ED00927F98 /* Assets.xcassets */; };
 		E2C15071225AF1ED00927F98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2C1506F225AF1ED00927F98 /* LaunchScreen.storyboard */; };
-		E2C15079225B6D8E00927F98 /* AnimationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C15078225B6D8E00927F98 /* AnimationInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		E2C1506D225AF1ED00927F98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2C15070225AF1ED00927F98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2C15072225AF1ED00927F98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E2C15078225B6D8E00927F98 /* AnimationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +85,6 @@
 				E2C15064225AF1E300927F98 /* AppDelegate.swift */,
 				E2C15066225AF1E300927F98 /* art.scnassets */,
 				E2C15068225AF1E300927F98 /* ViewController.swift */,
-				E2C15078225B6D8E00927F98 /* AnimationInfo.swift */,
 				E2C1506A225AF1E300927F98 /* Main.storyboard */,
 				E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */,
 				E2C1506D225AF1ED00927F98 /* Assets.xcassets */,
@@ -222,7 +219,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2C15079225B6D8E00927F98 /* AnimationInfo.swift in Sources */,
 				E2C15069225AF1E300927F98 /* ViewController.swift in Sources */,
 				E2331AFA225D115200F2DF4F /* FindPokeViewController.swift in Sources */,
 				E2C15065225AF1E300927F98 /* AppDelegate.swift in Sources */,
