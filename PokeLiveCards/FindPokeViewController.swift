@@ -99,9 +99,17 @@ func findInfoPoke(completion : @escaping ()->()){
             do {
                 let json = try JSON(data:response.data!)
                 
-                pokemon = Pokemon(name: "\(json["card"]["name"])", attack1: "\(json["card"]["attacks"][0]["name"])", damage1: "\(json["card"]["attacks"][0]["damage"])", attackInfo1: "\(json["card"]["attacks"][0]["text"])", attack2: "\(json["card"]["attacks"][1]["name"])", damage2: "\(json["card"]["attacks"][1]["damage"])", attackInfo2: "\(json["card"]["attacks"][1]["text"])", pokeCardImg: "\(pokeNameIdentificado!)")
-                
-                print("CArol = \(pokemon)")
+                pokemon = Pokemon(
+                    name: "\(json["card"]["name"])",
+                    hp: "\(json["card"]["hp"])",
+                    attack1: "\(json["card"]["attacks"][0]["name"])",
+                    damage1: "\(json["card"]["attacks"][0]["damage"])",
+                    attackInfo1: "\(json["card"]["attacks"][0]["text"])",
+                    attack2: "\(json["card"]["attacks"][1]["name"])",
+                    damage2: "\(json["card"]["attacks"][1]["damage"])",
+                    attackInfo2: "\(json["card"]["attacks"][1]["text"])",
+                    pokeCardImg: "\(pokeNameIdentificado!)"
+                )
                 
             }
             catch {

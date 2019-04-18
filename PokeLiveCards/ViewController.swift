@@ -61,18 +61,84 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     private lazy var pokemonNameLabel: UILabel = {
         let label = UILabel()
         label.text = pokemon!.name
+        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.medium)
+        label.textColor = .orange
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var pokemonHPLabel: UILabel = {
+        let label = UILabel()
+        label.text = "HP: \(pokemon!.hp)"
+        label.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.medium)
+        label.textColor = .red
+        label.textAlignment = .center
+        return label
+    }()
+    
+    /*private lazy var attackLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Attacks:"
+        label.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
+        label.textColor = .black
+        label.textAlignment = .center
+        return label
+    }()*/
+    
+    private lazy var attack1Label: UILabel = {
+        let label = UILabel()
+        label.text = pokemon!.attack1
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+        label.textColor = .black// #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var attack2Label: UILabel = {
+        let label = UILabel()
+        label.text = pokemon!.attack2
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+        label.textColor = .black//#colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var damage1Label: UILabel = {
+        let label = UILabel()
+        label.text = pokemon!.damage1
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         label.textColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         label.textAlignment = .center
         return label
     }()
     
-    private lazy var closedTitleLabel: UILabel = {
+    private lazy var damage2Label: UILabel = {
         let label = UILabel()
-        label.text = pokemon!.name
+        label.text = pokemon!.damage2
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         label.textColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var attackInfo1Label: UILabel = {
+        let label = UILabel()
+        print("texto \(pokemon!.attackInfo1)")
+        label.text = pokemon!.attackInfo1
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+        label.textColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        label.textAlignment = .center
+        label.numberOfLines = 3
+        return label
+    }()
+    
+    private lazy var attackInfo2Label: UILabel = {
+        let label = UILabel()
+        label.text = pokemon!.attackInfo2
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+        label.textColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        label.textAlignment = .center
+        label.numberOfLines = 3
         return label
     }()
     
@@ -103,13 +169,64 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottomConstraint = popupView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: popupOffset)
         bottomConstraint.isActive = true
-        popupView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+            popupView.heightAnchor.constraint(equalToConstant: 500).isActive = true
         
         pokemonNameLabel.translatesAutoresizingMaskIntoConstraints = false
         popupView.addSubview(pokemonNameLabel)
         pokemonNameLabel.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
         pokemonNameLabel.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
         pokemonNameLabel.topAnchor.constraint(equalTo: popupView.topAnchor, constant: 20).isActive = true
+        
+        pokemonHPLabel.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(pokemonHPLabel)
+        pokemonHPLabel.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
+        pokemonHPLabel.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
+        pokemonHPLabel.topAnchor.constraint(equalTo: pokemonNameLabel.topAnchor, constant: 25).isActive = true
+        
+        /*attackLabel.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(attackLabel)
+        attackLabel.leftAnchor.constraint(equalTo: popupView.leftAnchor, constant: 5).isActive = true
+        attackLabel.topAnchor.constraint(equalTo: pokemonNameLabel.topAnchor, constant: 50).isActive = true*/
+        
+        attack1Label.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(attack1Label)
+        attack1Label.leftAnchor.constraint(equalTo: popupView.leftAnchor, constant: 5).isActive = true
+        attack1Label.topAnchor.constraint(equalTo: pokemonHPLabel.topAnchor, constant: 50).isActive = true
+        
+        damage1Label.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(damage1Label)
+        damage1Label.rightAnchor.constraint(equalTo: popupView.rightAnchor).isActive = true
+        damage1Label.topAnchor.constraint(equalTo: pokemonHPLabel.topAnchor, constant: 50).isActive = true
+        
+        attackInfo1Label.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(attackInfo1Label)
+        attackInfo1Label.centerXAnchor.constraint(equalTo: popupView.centerXAnchor).isActive = true
+        attackInfo1Label.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
+        attackInfo1Label.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
+        attackInfo1Label.topAnchor.constraint(equalTo: attack1Label.topAnchor, constant: 30).isActive = true
+        attackInfo1Label.rightAnchor.constraint(equalTo: damage1Label.rightAnchor, constant: 10).isActive = true
+        attackInfo1Label.contentMode = .scaleToFill
+        attackInfo1Label.adjustsFontSizeToFitWidth = true
+        
+        attack2Label.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(attack2Label)
+        attack2Label.leftAnchor.constraint(equalTo: popupView.leftAnchor, constant: 5).isActive = true
+        attack2Label.topAnchor.constraint(equalTo: attackInfo1Label.bottomAnchor, constant: 40).isActive = true
+        
+        damage2Label.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(damage2Label)
+        damage2Label.rightAnchor.constraint(equalTo: popupView.rightAnchor).isActive = true
+        damage2Label.topAnchor.constraint(equalTo: attackInfo1Label.bottomAnchor, constant: 40).isActive = true
+        
+        attackInfo2Label.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(attackInfo2Label)
+        attackInfo2Label.centerXAnchor.constraint(equalTo: popupView.centerXAnchor).isActive = true
+        attackInfo2Label.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
+        attackInfo2Label.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
+        attackInfo2Label.topAnchor.constraint(equalTo: attack2Label.topAnchor, constant: 30).isActive = true
+        attackInfo2Label.rightAnchor.constraint(equalTo: damage2Label.rightAnchor, constant: 10).isActive = true
+        attackInfo2Label.contentMode = .scaleToFill
+        attackInfo2Label.adjustsFontSizeToFitWidth = true
     }
     
     private var currentState: State = .closed
@@ -210,6 +327,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         selectedImage = imageAnchor.referenceImage.name
         
         pokeNameIdentificado = selectedImage
+        
+        pokemon = nil
         
         findInfoPoke(completion: {
             self.layout()
