@@ -5,16 +5,19 @@
   },
   "resources" : [
     {
-      "filename" : "altaria-mega.arreferenceimage"
-    },
-    {
-      "filename" : "altaria.arreferenceimage"
-    },
-    {
       "filename" : "PlaneAnchor.arreferenceimage"
     },
     {
-      "filename" : "xerneas.arreferenceimage"
+      "filename" : "xy1-96.arreferenceimage"
+    },
+    {
+      "filename" : "xy10-69.arreferenceimage"
+    },
+    {
+      "filename" : "xy10-83.arreferenceimage"
+    },
+    {
+      "filename" : "xy10-123.arreferenceimage"
     }
   ]
 }

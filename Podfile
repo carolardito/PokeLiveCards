@@ -9,5 +9,7 @@ target 'PokeLiveCards' do
 	pod 'PokemonAPI'
 	pod 'Alamofire', '~> 4.7'
 	pod 'SwiftyJSON', '~> 4.0'
+	pod 'Firebase/Core'
+	pod 'Firebase/Database'
 
 end

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		705B6DE8F4CC3FCDE2B5BC76 /* Pods_PokeLiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3214F4EE4734E4AF213CF9AA /* Pods_PokeLiveCards.framework */; };
+		E220D96B226797AB0065766A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E220D96A226797AB0065766A /* GoogleService-Info.plist */; };
+		E220D96D2267BD7F0065766A /* CardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220D96C2267BD7F0065766A /* CardItem.swift */; };
+		E224222D226849FD0040F1D6 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E224222C226849FD0040F1D6 /* Pokemon.swift */; };
 		E2331AFA225D115200F2DF4F /* FindPokeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */; };
 		E2C15065225AF1E300927F98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C15064225AF1E300927F98 /* AppDelegate.swift */; };
 		E2C15067225AF1E300927F98 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C15066225AF1E300927F98 /* art.scnassets */; };
@@ -21,6 +24,10 @@
 		2D2E45DFED7164DFD4096505 /* Pods-PokeLiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeLiveCards.debug.xcconfig"; path = "Target Support Files/Pods-PokeLiveCards/Pods-PokeLiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		3214F4EE4734E4AF213CF9AA /* Pods_PokeLiveCards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PokeLiveCards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E09F09D101F5E2AFBBDFF1B3 /* Pods-PokeLiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeLiveCards.release.xcconfig"; path = "Target Support Files/Pods-PokeLiveCards/Pods-PokeLiveCards.release.xcconfig"; sourceTree = "<group>"; };
+		E220D969226764620065766A /* PokeLiveCards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PokeLiveCards.entitlements; sourceTree = "<group>"; };
+		E220D96A226797AB0065766A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E220D96C2267BD7F0065766A /* CardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardItem.swift; sourceTree = "<group>"; };
+		E224222C226849FD0040F1D6 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPokeViewController.swift; sourceTree = "<group>"; };
 		E2C15061225AF1E300927F98 /* PokeLiveCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeLiveCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C15064225AF1E300927F98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,13 +89,17 @@
 		E2C15063225AF1E300927F98 /* PokeLiveCards */ = {
 			isa = PBXGroup;
 			children = (
+				E220D969226764620065766A /* PokeLiveCards.entitlements */,
 				E2C15064225AF1E300927F98 /* AppDelegate.swift */,
 				E2C15066225AF1E300927F98 /* art.scnassets */,
 				E2C15068225AF1E300927F98 /* ViewController.swift */,
+				E224222C226849FD0040F1D6 /* Pokemon.swift */,
 				E2C1506A225AF1E300927F98 /* Main.storyboard */,
 				E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */,
+				E220D96C2267BD7F0065766A /* CardItem.swift */,
 				E2C1506D225AF1ED00927F98 /* Assets.xcassets */,
 				E2C1506F225AF1ED00927F98 /* LaunchScreen.storyboard */,
+				E220D96A226797AB0065766A /* GoogleService-Info.plist */,
 				E2C15072225AF1ED00927F98 /* Info.plist */,
 			);
 			path = PokeLiveCards;
@@ -128,6 +139,14 @@
 				TargetAttributes = {
 					E2C15060225AF1E300927F98 = {
 						CreatedOnToolsVersion = 10.2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -156,6 +175,7 @@
 			files = (
 				E2C15067225AF1E300927F98 /* art.scnassets in Resources */,
 				E2C15071225AF1ED00927F98 /* LaunchScreen.storyboard in Resources */,
+				E220D96B226797AB0065766A /* GoogleService-Info.plist in Resources */,
 				E2C1506E225AF1ED00927F98 /* Assets.xcassets in Resources */,
 				E2C1506C225AF1E300927F98 /* Main.storyboard in Resources */,
 			);
@@ -174,16 +194,22 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PokeLiveCards/Pods-PokeLiveCards-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PokemonAPI/PokemonAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PokemonAPI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -219,8 +245,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E224222D226849FD0040F1D6 /* Pokemon.swift in Sources */,
 				E2C15069225AF1E300927F98 /* ViewController.swift in Sources */,
 				E2331AFA225D115200F2DF4F /* FindPokeViewController.swift in Sources */,
+				E220D96D2267BD7F0065766A /* CardItem.swift in Sources */,
 				E2C15065225AF1E300927F98 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
