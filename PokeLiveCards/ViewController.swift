@@ -11,6 +11,9 @@ import SceneKit
 import ARKit
 import UIKit.UIGestureRecognizerSubclass
 
+var pokemon: Pokemon?
+var pokeNameIdentificado : String?
+
 private enum State {
     case closed
     case open
@@ -38,12 +41,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     private let popupOffset: CGFloat = 440
     
-    /*private lazy var contentImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "xy10-83")
-        return imageView
-    }()*/
-    
     private lazy var overlayView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -61,29 +58,29 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return view
     }()
     
-    private lazy var closedTitleLabel: UILabel = {
+    private lazy var pokemonNameLabel: UILabel = {
         let label = UILabel()
-        label.text = self.selectedImage
+        label.text = pokemon!.name
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         label.textColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         label.textAlignment = .center
         return label
     }()
     
-    /*private lazy var reviewsImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "reviews")
-        return imageView
-    }()*/
+    private lazy var closedTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = pokemon!.name
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+        label.textColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        label.textAlignment = .center
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         sceneView.delegate = self
         
-        /*layout()
-        //popupView.addGestureRecognizer(tapRecognizer)
-        popupView.addGestureRecognizer(panRecognizer)*/
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -108,31 +105,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         bottomConstraint.isActive = true
         popupView.heightAnchor.constraint(equalToConstant: 500).isActive = true
         
-        closedTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        popupView.addSubview(closedTitleLabel)
-        closedTitleLabel.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
-        closedTitleLabel.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
-        closedTitleLabel.topAnchor.constraint(equalTo: popupView.topAnchor, constant: 20).isActive = true
-        
-        /*reviewsImageView.translatesAutoresizingMaskIntoConstraints = false
-        popupView.addSubview(reviewsImageView)
-        reviewsImageView.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
-        reviewsImageView.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
-        reviewsImageView.bottomAnchor.constraint(equalTo: popupView.bottomAnchor).isActive = true
-        reviewsImageView.heightAnchor.constraint(equalToConstant: 428).isActive = true*/
+        pokemonNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(pokemonNameLabel)
+        pokemonNameLabel.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
+        pokemonNameLabel.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
+        pokemonNameLabel.topAnchor.constraint(equalTo: popupView.topAnchor, constant: 20).isActive = true
     }
     
     private var currentState: State = .closed
     private var transitionAnimator = UIViewPropertyAnimator()
     
-    /*private lazy var tapRecognizer: UITapGestureRecognizer = {
-        let recognizer = UITapGestureRecognizer()
-        recognizer.addTarget(self, action: #selector(popupViewTapped(recognizer:)))
-        return recognizer
-    }()
-    
-    private lazy var panRecognizer: UIPanGestureRecognizer = {
-        let recognizer = UIPanGestureRecognizer()*/
     private lazy var panRecognizer: InstantPanGestureRecognizer = {
         let recognizer = InstantPanGestureRecognizer()
         recognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
@@ -210,9 +192,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             fatalError("Missing expected asset catalog resources.")
         }
         
-        /*guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "pokemons", bundle: nil) else {
-            fatalError("Missing expected asset catalog resources.")
-        }*/
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
         
@@ -227,15 +206,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
-        //print("carol test = \(String(describing: imageAnchor.referenceImage.name))")
-        selectedImage = imageAnchor.referenceImage.name
-        //print("carol test variavel = \(selectedImage)")
-        //self.performSegue(withIdentifier: "showImgInfo", sender: self)
-        // Delegate rendering tasks to our `updateQueue` thread to keep things thread-safe!
         
-        layout()
-        //popupView.addGestureRecognizer(tapRecognizer)
-        popupView.addGestureRecognizer(panRecognizer)
+        selectedImage = imageAnchor.referenceImage.name
+        
+        pokeNameIdentificado = selectedImage
+        
+        findInfoPoke(completion: {
+            self.layout()
+            self.popupView.addGestureRecognizer(self.panRecognizer)
+        })
         
         updateQueue.async {
             let physicalWidth = imageAnchor.referenceImage.physicalSize.width //* 100
@@ -269,7 +248,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
             // Perform a quick animation to visualize the plane on which the image was detected.
             // We want to let our users know that the app is responding to the tracked image.
-            self.highlightDetection(on: mainNode, width: physicalWidth, height: physicalHeight, completionHandler: {
+            /*self.highlightDetection(on: mainNode, width: physicalWidth, height: physicalHeight, completionHandler: {
                 
                 // Introduce virtual content
                 //self.displayDetailView(on: mainNode, xOffset: physicalWidth)
@@ -277,7 +256,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 // Animate the WebView to the right
                 self.displayWebView(on: mainNode, xOffset: physicalWidth)
                 
-             })
+             })*/
         }
     }
     
@@ -304,7 +283,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             ])
     }
     
-    func displayWebView(on rootNode: SCNNode, xOffset: CGFloat) {
+    /*func displayWebView(on rootNode: SCNNode, xOffset: CGFloat) {
         // Xcode yells at us about the deprecation of UIWebView in iOS 12.0, but there is currently
         // a bug that does now allow us to use a WKWebView as a texture for our webViewNode
         // Note that UIWebViews should only be instantiated on the main thread!
@@ -352,7 +331,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             .moveBy(x: 0, y: 0, z: -0.05, duration: 0.2)
             ])
         )
-    }
+    }*/
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showImgInfo"{
@@ -361,7 +340,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 print("actual = \(actualSelectedImage)")
                 //imageInformationVC.pokeNameIdentificado = actualSelectedImage.name  // "xerneas"
                 //imageInformationVC.imageInformation = actualSelectedImage
-                imageInformationVC.pokeNameIdentificado = actualSelectedImage
+                //imageInformationVC.pokeNameIdentificado = actualSelectedImage
+                pokeNameIdentificado = actualSelectedImage
             }
         }
     }
