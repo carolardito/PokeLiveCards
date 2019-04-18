@@ -12,6 +12,7 @@
 		E220D96D2267BD7F0065766A /* CardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220D96C2267BD7F0065766A /* CardItem.swift */; };
 		E224222D226849FD0040F1D6 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E224222C226849FD0040F1D6 /* Pokemon.swift */; };
 		E2331AFA225D115200F2DF4F /* FindPokeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */; };
+		E2A8F3D622688509007C75D6 /* dinosaur.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E2A8F3D5226882F3007C75D6 /* dinosaur.mp4 */; };
 		E2C15065225AF1E300927F98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C15064225AF1E300927F98 /* AppDelegate.swift */; };
 		E2C15067225AF1E300927F98 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C15066225AF1E300927F98 /* art.scnassets */; };
 		E2C15069225AF1E300927F98 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C15068225AF1E300927F98 /* ViewController.swift */; };
@@ -29,6 +30,8 @@
 		E220D96C2267BD7F0065766A /* CardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardItem.swift; sourceTree = "<group>"; };
 		E224222C226849FD0040F1D6 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPokeViewController.swift; sourceTree = "<group>"; };
+		E2A8F3D5226882F3007C75D6 /* dinosaur.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dinosaur.mp4; sourceTree = "<group>"; };
+		E2A8F3DB22688A2E007C75D6 /* model.dae */ = {isa = PBXFileReference; lastKnownFileType = text.xml.dae; name = model.dae; path = "New Group/Xerneas/model.dae"; sourceTree = "<group>"; };
 		E2C15061225AF1E300927F98 /* PokeLiveCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeLiveCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C15064225AF1E300927F98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2C15066225AF1E300927F98 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -91,8 +94,10 @@
 			children = (
 				E220D969226764620065766A /* PokeLiveCards.entitlements */,
 				E2C15064225AF1E300927F98 /* AppDelegate.swift */,
+				E2A8F3DB22688A2E007C75D6 /* model.dae */,
 				E2C15066225AF1E300927F98 /* art.scnassets */,
 				E2C15068225AF1E300927F98 /* ViewController.swift */,
+				E2A8F3D5226882F3007C75D6 /* dinosaur.mp4 */,
 				E224222C226849FD0040F1D6 /* Pokemon.swift */,
 				E2C1506A225AF1E300927F98 /* Main.storyboard */,
 				E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */,
@@ -175,6 +180,7 @@
 			files = (
 				E2C15067225AF1E300927F98 /* art.scnassets in Resources */,
 				E2C15071225AF1ED00927F98 /* LaunchScreen.storyboard in Resources */,
+				E2A8F3D622688509007C75D6 /* dinosaur.mp4 in Resources */,
 				E220D96B226797AB0065766A /* GoogleService-Info.plist in Resources */,
 				E2C1506E225AF1ED00927F98 /* Assets.xcassets in Resources */,
 				E2C1506C225AF1E300927F98 /* Main.storyboard in Resources */,

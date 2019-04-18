@@ -33,6 +33,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
     
     var selectedImage : String?//ImageInformation?
+    private var imageConfiguration: ARImageTrackingConfiguration?
+    private var worldConfiguration: ARWorldTrackingConfiguration?
     
     // A serial queue for thread safety when modifying SceneKit's scene graph.
     let updateQueue = DispatchQueue(label: "\(Bundle.main.bundleIdentifier!).serialSCNQueue")
@@ -142,10 +144,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return label
     }()
     
+    private lazy var wishListButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Add to wishlist", for: .normal)
+        button.backgroundColor = .blue
+        button.tintColor = .white
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         sceneView.delegate = self
+        
+        let scene = SCNScene()
+        sceneView.scene = scene
+        
+        //setupObjectDetection()
+
         
     }
     
@@ -227,9 +243,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         attackInfo2Label.rightAnchor.constraint(equalTo: damage2Label.rightAnchor, constant: 10).isActive = true
         attackInfo2Label.contentMode = .scaleToFill
         attackInfo2Label.adjustsFontSizeToFitWidth = true
+        
+        wishListButton.translatesAutoresizingMaskIntoConstraints = false
+        popupView.addSubview(wishListButton)
+        wishListButton.centerXAnchor.constraint(equalTo: popupView.centerXAnchor).isActive = true
+        wishListButton.topAnchor.constraint(equalTo: attackInfo2Label.bottomAnchor, constant: 40).isActive = true
     }
     
-    private var currentState: State = .closed
+    private var currentState: State = .closed 
     private var transitionAnimator = UIViewPropertyAnimator()
     
     private lazy var panRecognizer: InstantPanGestureRecognizer = {
@@ -299,10 +320,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        sceneView.session.pause()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if let configuration = worldConfiguration {
+            sceneView.debugOptions = .showFeaturePoints
+            sceneView.session.run(configuration)
+        }
         
         // Load reference images to look for from "AR Resources" folder
         guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
@@ -324,6 +353,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
         
+        //imageConfiguration?.trackingImages = referenceImages
+        
         selectedImage = imageAnchor.referenceImage.name
         
         pokeNameIdentificado = selectedImage
@@ -335,51 +366,94 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.popupView.addGestureRecognizer(self.panRecognizer)
         })
         
-        updateQueue.async {
-            let physicalWidth = imageAnchor.referenceImage.physicalSize.width //* 100
-            let physicalHeight = imageAnchor.referenceImage.physicalSize.height //* 100
-            print("physicalWidth = \(physicalWidth)")
-            // Create a plane geometry to visualize the initial position of the detected image
-            let mainPlane = SCNPlane(width: physicalWidth * 100, height: physicalHeight * 100)
-            
-            // This bit is important. It helps us create occlusion so virtual things stay hidden behind the detected image
-            mainPlane.firstMaterial?.colorBufferWriteMask = .alpha
-            
-            // Create a SceneKit root node with the plane geometry to attach to the scene graph
-            // This node will hold the virtual UI in place
-            let mainNode = SCNNode(geometry: mainPlane)
-            mainNode.eulerAngles.x = -.pi / 2
-            mainNode.renderingOrder = -1
-            mainNode.opacity = 1
+        /*if let help = addCar(){
+            node.addChildNode(help)
+            node.opacity = 1
+        }*/
         
-        
-            // Pick smallest value to be sure that object fits into the image.
-            let finalRatio = [physicalWidth, physicalHeight].min()!
-            //mainNode.transform = SCNMatrix4(imageAnchor.transform)
-            let appearanceAction = SCNAction.scale(to: CGFloat(finalRatio), duration: 0.4)
-            //appearanceAction.timingMode = .easeOut
-            //mainNode.scale = SCNVector3Make(1, 1, 1)
-            
-            // Add the plane visualization to the scene
-            node.addChildNode(mainNode)
-        
-            mainNode.runAction(appearanceAction)
-        
-            // Perform a quick animation to visualize the plane on which the image was detected.
-            // We want to let our users know that the app is responding to the tracked image.
-            /*self.highlightDetection(on: mainNode, width: physicalWidth, height: physicalHeight, completionHandler: {
-                
-                // Introduce virtual content
-                //self.displayDetailView(on: mainNode, xOffset: physicalWidth)
-                
-                // Animate the WebView to the right
-                self.displayWebView(on: mainNode, xOffset: physicalWidth)
-                
-             })*/
+        let size = imageAnchor.referenceImage.physicalSize
+        if let videoNode = makeDinosaurVideo(size: size) {
+            node.addChildNode(videoNode)
+            node.opacity = 1
         }
     }
     
-    func highlightDetection(on rootNode: SCNNode, width: CGFloat, height: CGFloat, completionHandler block: @escaping (() -> Void)) {
+    func addCar(x: Float = 0, y: Float = 0, z: Float = -0.5) -> SCNNode? {
+        guard let carScene = SCNScene(named: "model.dae") else { return nil}
+        let carNode = SCNNode()
+        let carSceneChildNodes = carScene.rootNode.childNodes
+        for childNode in carSceneChildNodes {
+            carNode.addChildNode(childNode)
+        }
+        carNode.position = SCNVector3(x, y, z)
+        carNode.scale = SCNVector3(0.5, 0.5, 0.5)
+        //sceneView.scene.rootNode.addChildNode(carNode)
+        return carNode
+    }
+    
+    private func makeDinosaurVideo(size: CGSize) -> SCNNode? {
+        // 1
+        guard let videoURL = Bundle.main.url(forResource: "dinosaur",
+                                             withExtension: "mp4") else {
+                                                return nil
+        }
+        
+        // 2
+        let avPlayerItem = AVPlayerItem(url: videoURL)
+        let avPlayer = AVPlayer(playerItem: avPlayerItem)
+        //avPlayer.play()
+        
+        // 3
+        NotificationCenter.default.addObserver(
+            forName: .AVPlayerItemDidPlayToEndTime,
+            object: nil,
+            queue: nil) { notification in
+                avPlayer.seek(to: .zero)
+                avPlayer.play()
+        }
+        
+        // 4
+        let avMaterial = SCNMaterial()
+        avMaterial.diffuse.contents = avPlayer
+        
+        // 5
+        let videoPlane = SCNPlane(width: size.width, height: size.height)
+        videoPlane.materials = [avMaterial]
+        
+        // 6
+        let videoNode = SCNNode(geometry: videoPlane)
+        videoNode.eulerAngles.x = -.pi / 2
+        return videoNode
+    }
+    
+    private func setupImageDetection() {
+        imageConfiguration = ARImageTrackingConfiguration()
+        
+        guard let referenceImages = ARReferenceImage.referenceImages(
+            inGroupNamed: "AR Resources", bundle: nil) else {
+                fatalError("Missing expected asset catalog resources.")
+        }
+        imageConfiguration?.trackingImages = referenceImages
+    }
+    
+    private func setupObjectDetection() {
+        worldConfiguration = ARWorldTrackingConfiguration()
+        
+        guard let referenceObjects = ARReferenceObject.referenceObjects(
+            inGroupNamed: "AR Objects", bundle: nil) else {
+                fatalError("Missing expected asset catalog resources.")
+        }
+        
+        worldConfiguration?.detectionObjects = referenceObjects
+        
+        guard let referenceImages = ARReferenceImage.referenceImages(
+            inGroupNamed: "AR Resources", bundle: nil) else {
+                fatalError("Missing expected asset catalog resources.")
+        }
+        worldConfiguration?.detectionImages = referenceImages
+    }
+    
+    /*func highlightDetection(on rootNode: SCNNode, width: CGFloat, height: CGFloat, completionHandler block: @escaping (() -> Void)) {
         let planeNode = SCNNode(geometry: SCNPlane(width: width, height: height))
         planeNode.geometry?.firstMaterial?.diffuse.contents = UIColor.white
         planeNode.position.z += 0.1
@@ -400,7 +474,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             .fadeOut(duration: 0.5),
             .removeFromParentNode()
             ])
-    }
+    }*/
     
     /*func displayWebView(on rootNode: SCNNode, xOffset: CGFloat) {
         // Xcode yells at us about the deprecation of UIWebView in iOS 12.0, but there is currently
