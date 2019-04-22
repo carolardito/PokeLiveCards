@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "altaria.jpg"
+      "filename" : "SM2-93.jpg"
     }
   ],
   "info" : {
@@ -10,7 +10,7 @@
     "author" : "xcode"
   },
   "properties" : {
-    "width" : 6.4000000000000004,
+    "width" : 6.399981511914544,
     "unit" : "centimeters"
   }
 }

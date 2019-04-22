@@ -99,9 +99,25 @@ func findInfoPoke(completion : @escaping ()->()){
             do {
                 let json = try JSON(data:response.data!)
                 
+                print("CAROL - COUNT ATTACKS = \(json["card"]["attacks"].count)")
+                
+                var attacks: [JSON] = []
+                
+                for attack in json["card"]["attacks"] {
+                     print("CAROL - ATTACK = \(attack)")
+                    
+                    attacks.append(attack.1)
+                    
+                    //let help: "\(attack["name"])"
+                    //attacks.append(help)
+                }
+                
+                print("CAROL - ATTACK/HELP 0 = \(attacks[0])")
+                
                 pokemon = Pokemon(
                     name: "\(json["card"]["name"])",
                     hp: "\(json["card"]["hp"])",
+                    attacks: attacks,
                     attack1: "\(json["card"]["attacks"][0]["name"])",
                     damage1: "\(json["card"]["attacks"][0]["damage"])",
                     attackInfo1: "\(json["card"]["attacks"][0]["text"])",

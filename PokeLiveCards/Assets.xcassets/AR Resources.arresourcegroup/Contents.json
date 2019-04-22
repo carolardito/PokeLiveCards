@@ -5,19 +5,91 @@
   },
   "resources" : [
     {
+      "filename" : "BW6-27.arreferenceimage"
+    },
+    {
+      "filename" : "BW7-29.arreferenceimage"
+    },
+    {
+      "filename" : "BW7-30.arreferenceimage"
+    },
+    {
+      "filename" : "BW7-31.arreferenceimage"
+    },
+    {
+      "filename" : "BW7-49.arreferenceimage"
+    },
+    {
       "filename" : "PlaneAnchor.arreferenceimage"
+    },
+    {
+      "filename" : "SM1-13.arreferenceimage"
+    },
+    {
+      "filename" : "SM1-51.arreferenceimage"
+    },
+    {
+      "filename" : "SM1-94.arreferenceimage"
+    },
+    {
+      "filename" : "SM1-96.arreferenceimage"
+    },
+    {
+      "filename" : "SM2-93.arreferenceimage"
+    },
+    {
+      "filename" : "SMP-SM28.arreferenceimage"
     },
     {
       "filename" : "xy1-96.arreferenceimage"
     },
     {
+      "filename" : "XY5-44.arreferenceimage"
+    },
+    {
+      "filename" : "XY7-30.arreferenceimage"
+    },
+    {
+      "filename" : "XY8-32.arreferenceimage"
+    },
+    {
+      "filename" : "XY8-33.arreferenceimage"
+    },
+    {
+      "filename" : "XY10-10.arreferenceimage"
+    },
+    {
+      "filename" : "XY10-12.arreferenceimage"
+    },
+    {
+      "filename" : "XY10-13.arreferenceimage"
+    },
+    {
       "filename" : "xy10-69.arreferenceimage"
+    },
+    {
+      "filename" : "xy10-72.arreferenceimage"
     },
     {
       "filename" : "xy10-83.arreferenceimage"
     },
     {
       "filename" : "xy10-123.arreferenceimage"
+    },
+    {
+      "filename" : "XY11-21.arreferenceimage"
+    },
+    {
+      "filename" : "XY11-25.arreferenceimage"
+    },
+    {
+      "filename" : "XY11-26.arreferenceimage"
+    },
+    {
+      "filename" : "XY11-82.arreferenceimage"
+    },
+    {
+      "filename" : "XY11-96.arreferenceimage"
     }
   ]
 }

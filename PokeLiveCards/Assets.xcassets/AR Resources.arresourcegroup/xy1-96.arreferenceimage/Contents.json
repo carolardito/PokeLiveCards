@@ -1,10 +1,9 @@
 {
   "images" : [
-      {
-          "idiom" : "universal",
-          "filename" : "xerneas1.png"
-      }
-
+    {
+      "idiom" : "universal",
+      "filename" : "xerneas1.png"
+    }
   ],
   "info" : {
     "version" : 1,

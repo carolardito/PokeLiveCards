@@ -10,6 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 import UIKit.UIGestureRecognizerSubclass
+import FirebaseDatabase
 
 var pokemon: Pokemon?
 var pokeNameIdentificado : String?
@@ -28,9 +29,32 @@ extension State {
     }
 }
 
+extension SCNNode {
+    
+    public class func allNodes(from file: String) -> [SCNNode] {
+        var nodesInFile = [SCNNode]()
+        do {
+            guard let sceneURL = Bundle.main.path(forResource: file, ofType: "gif") else {
+                print("Could not find scene file \(file)")
+                return nodesInFile
+            }
+            
+            //SCNScene(named: file+".dae")
+            
+            let objScene = try SCNScene(named: file+".gif")/*SCNScene(url: sceneURL as URL, options: [SCNSceneSource.LoadingOption.animationImportPolicy: SCNSceneSource.AnimationImportPolicy.doNotPlay])*/
+            objScene!.rootNode.enumerateChildNodes({ (node, _) in
+                nodesInFile.append(node)
+            })
+        } catch {}
+        return nodesInFile
+    }
+}
+
 class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    
+    let ref = Database.database().reference()
     
     var selectedImage : String?//ImageInformation?
     private var imageConfiguration: ARImageTrackingConfiguration?
@@ -149,6 +173,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         button.setTitle("Add to wishlist", for: .normal)
         button.backgroundColor = .blue
         button.tintColor = .white
+        
         return button
     }()
     
@@ -161,8 +186,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene = scene
         
         //setupObjectDetection()
-
-        
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -185,15 +208,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottomConstraint = popupView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: popupOffset)
         bottomConstraint.isActive = true
-            popupView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        popupView.heightAnchor.constraint(equalToConstant: 500).isActive = true
         
         pokemonNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        pokemonNameLabel.text = pokemon!.name
         popupView.addSubview(pokemonNameLabel)
         pokemonNameLabel.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
         pokemonNameLabel.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
         pokemonNameLabel.topAnchor.constraint(equalTo: popupView.topAnchor, constant: 20).isActive = true
         
         pokemonHPLabel.translatesAutoresizingMaskIntoConstraints = false
+        pokemonHPLabel.text = pokemon!.hp
         popupView.addSubview(pokemonHPLabel)
         pokemonHPLabel.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
         pokemonHPLabel.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
@@ -205,16 +230,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         attackLabel.topAnchor.constraint(equalTo: pokemonNameLabel.topAnchor, constant: 50).isActive = true*/
         
         attack1Label.translatesAutoresizingMaskIntoConstraints = false
+        attack1Label.text = "\(pokemon!.attacks[0]["name"])"
         popupView.addSubview(attack1Label)
         attack1Label.leftAnchor.constraint(equalTo: popupView.leftAnchor, constant: 5).isActive = true
         attack1Label.topAnchor.constraint(equalTo: pokemonHPLabel.topAnchor, constant: 50).isActive = true
         
         damage1Label.translatesAutoresizingMaskIntoConstraints = false
+        damage1Label.text = "\(pokemon!.attacks[0]["damage"])"
         popupView.addSubview(damage1Label)
         damage1Label.rightAnchor.constraint(equalTo: popupView.rightAnchor).isActive = true
         damage1Label.topAnchor.constraint(equalTo: pokemonHPLabel.topAnchor, constant: 50).isActive = true
         
         attackInfo1Label.translatesAutoresizingMaskIntoConstraints = false
+        attackInfo1Label.text = "\(pokemon!.attacks[0]["text"])"
         popupView.addSubview(attackInfo1Label)
         attackInfo1Label.centerXAnchor.constraint(equalTo: popupView.centerXAnchor).isActive = true
         attackInfo1Label.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
@@ -224,30 +252,68 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         attackInfo1Label.contentMode = .scaleToFill
         attackInfo1Label.adjustsFontSizeToFitWidth = true
         
-        attack2Label.translatesAutoresizingMaskIntoConstraints = false
-        popupView.addSubview(attack2Label)
-        attack2Label.leftAnchor.constraint(equalTo: popupView.leftAnchor, constant: 5).isActive = true
-        attack2Label.topAnchor.constraint(equalTo: attackInfo1Label.bottomAnchor, constant: 40).isActive = true
         
-        damage2Label.translatesAutoresizingMaskIntoConstraints = false
-        popupView.addSubview(damage2Label)
-        damage2Label.rightAnchor.constraint(equalTo: popupView.rightAnchor).isActive = true
-        damage2Label.topAnchor.constraint(equalTo: attackInfo1Label.bottomAnchor, constant: 40).isActive = true
+        if (pokemon!.attacks.count == 2) {
+            attack2Label.isHidden = false
+            attack2Label.translatesAutoresizingMaskIntoConstraints = false
+            attack2Label.text = "\(pokemon!.attacks[1]["name"])"
+            //attack2Label.text = pokemon!.attack2
+            popupView.addSubview(attack2Label)
+            attack2Label.leftAnchor.constraint(equalTo: popupView.leftAnchor, constant: 5).isActive = true
+            attack2Label.topAnchor.constraint(equalTo: attackInfo1Label.bottomAnchor, constant: 40).isActive = true
+            
+            damage2Label.isHidden = false
+            damage2Label.translatesAutoresizingMaskIntoConstraints = false
+            damage2Label.text = "\(pokemon!.attacks[1]["damage"])"
+            popupView.addSubview(damage2Label)
+            damage2Label.rightAnchor.constraint(equalTo: popupView.rightAnchor).isActive = true
+            damage2Label.topAnchor.constraint(equalTo: attackInfo1Label.bottomAnchor, constant: 40).isActive = true
+            
+            attackInfo2Label.isHidden = false
+            attackInfo2Label.translatesAutoresizingMaskIntoConstraints = false
+            attackInfo2Label.text = "\(pokemon!.attacks[1]["text"])"
+            popupView.addSubview(attackInfo2Label)
+            attackInfo2Label.centerXAnchor.constraint(equalTo: popupView.centerXAnchor).isActive = true
+            attackInfo2Label.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
+            attackInfo2Label.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
+            attackInfo2Label.topAnchor.constraint(equalTo: attack2Label.topAnchor, constant: 30).isActive = true
+            attackInfo2Label.rightAnchor.constraint(equalTo: damage2Label.rightAnchor, constant: 10).isActive = true
+            attackInfo2Label.contentMode = .scaleToFill
+            attackInfo2Label.adjustsFontSizeToFitWidth = true
+        }else{
+            attack2Label.isHidden = true
+            damage2Label.isHidden = true
+            attackInfo2Label.isHidden = true
+        }
         
-        attackInfo2Label.translatesAutoresizingMaskIntoConstraints = false
-        popupView.addSubview(attackInfo2Label)
-        attackInfo2Label.centerXAnchor.constraint(equalTo: popupView.centerXAnchor).isActive = true
-        attackInfo2Label.leadingAnchor.constraint(equalTo: popupView.leadingAnchor).isActive = true
-        attackInfo2Label.trailingAnchor.constraint(equalTo: popupView.trailingAnchor).isActive = true
-        attackInfo2Label.topAnchor.constraint(equalTo: attack2Label.topAnchor, constant: 30).isActive = true
-        attackInfo2Label.rightAnchor.constraint(equalTo: damage2Label.rightAnchor, constant: 10).isActive = true
-        attackInfo2Label.contentMode = .scaleToFill
-        attackInfo2Label.adjustsFontSizeToFitWidth = true
+        //var dataFromDB: [String: Any] = [:]
+        var exists = false
+        ref.child(pokeNameIdentificado!).observeSingleEvent(of: .value){ (snapshot) in
+            let dataFromDB = snapshot.value as? [String: Any]
+            
+            print("CAROL DB = \(dataFromDB)")
+            //print("CAROL DB code = \(dataFromDB!["code"])")
+            
+            if dataFromDB != nil {
+                exists = true
+                self.wishListButton.isHidden = true
+            }else{
+                self.wishListButton.isHidden = false
+            }
+        }
         
         wishListButton.translatesAutoresizingMaskIntoConstraints = false
+        wishListButton.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDown)
         popupView.addSubview(wishListButton)
         wishListButton.centerXAnchor.constraint(equalTo: popupView.centerXAnchor).isActive = true
         wishListButton.topAnchor.constraint(equalTo: attackInfo2Label.bottomAnchor, constant: 40).isActive = true
+    }
+    
+    
+    @objc func buttonTouched(_ button: UIButton) {
+        print("boop")
+        ref.child(pokeNameIdentificado!).setValue(["name": pokemon!.name])
+        self.wishListButton.isHidden = true
     }
     
     private var currentState: State = .closed 
@@ -361,9 +427,62 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         pokemon = nil
         
+        /*node.enumerateChildNodes { (node, stop) in
+            node.removeFromParentNode()
+        }*/
+        
+        /*self.sceneView.scene.rootNode.enumerateChildNodes { (existingNode, _) in
+            existingNode.removeFromParentNode()
+        }*/
+        
         findInfoPoke(completion: {
             self.layout()
             self.popupView.addGestureRecognizer(self.panRecognizer)
+            
+            /*let size = imageAnchor.referenceImage.physicalSize
+            if let videoNode = self.makeDinosaurVideo(size: size) {
+                node.addChildNode(videoNode)
+                node.opacity = 1
+                
+                //addCar()
+            }*/
+            //self.addCar()
+            
+            //if let camera = sceneView.session.currentFrame?.camera {
+                //didInitializeScene = true
+                /*var translation = matrix_identity_float4x4
+                translation.columns.3.z = -1.0
+                //let transform = camera.transform * translation
+            let position = SCNVector3Make((node.position.x) + 2,
+                                          (node.position.y) + 4,
+                                          (node.position.z) - 2)//SCNVector3(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
+                self.addSphere(position: position)*/
+            //}
+            /*
+            let plane = SCNPlane(width: 2, height: 2)
+            
+            let bundleURL = Bundle.main.url(forResource: "xerneas", withExtension: "gif")
+            let animation : CAKeyframeAnimation = self.createGIFAnimation(url: bundleURL!)!
+            let layer = CALayer()
+            layer.bounds = CGRect(x: 0, y: 0, width: 900, height: 900)
+            
+            layer.add(animation, forKey: "contents")
+            let tempView = UIView.init(frame: CGRect(x: 0, y: 0, width: 900, height: 900))
+            tempView.layer.bounds = CGRect(x: -450, y: -450, width: tempView.frame.size.width, height: tempView.frame.size.height)
+            tempView.layer.addSublayer(layer)
+            
+            let newMaterial = SCNMaterial()
+            newMaterial.isDoubleSided = true
+            newMaterial.diffuse.contents = tempView.layer
+            plane.materials = [newMaterial]
+            let nodeX = SCNNode(geometry: plane)
+            nodeX.name = "xerneas"
+            let gifImagePosition = SCNVector3Make((node.position.x) + 2,
+                                                  (node.position.y) + 4,
+                                                  (node.position.z) - 2)
+            nodeX.position = gifImagePosition
+            node.addChildNode(nodeX)
+            */
         })
         
         /*if let help = addCar(){
@@ -371,15 +490,107 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             node.opacity = 1
         }*/
         
-        let size = imageAnchor.referenceImage.physicalSize
+        /*let size = imageAnchor.referenceImage.physicalSize
         if let videoNode = makeDinosaurVideo(size: size) {
             node.addChildNode(videoNode)
             node.opacity = 1
-        }
+            
+            //addCar()
+        }*/
     }
     
-    func addCar(x: Float = 0, y: Float = 0, z: Float = -0.5) -> SCNNode? {
-        guard let carScene = SCNScene(named: "model.dae") else { return nil}
+    /*func addSphere(position: SCNVector3) {
+        guard let scene = self.sceneView else { return }
+        
+        let containerNode = SCNNode()
+        let nodesInFile = SCNNode.allNodes(from: "xerneas")
+        
+        nodesInFile.forEach { (node) in
+            containerNode.addChildNode(node)
+        }
+        
+        containerNode.position = position
+        scene.scene.rootNode.addChildNode(containerNode)
+    }*/
+    
+    /*func createGIFAnimation(url:URL) -> CAKeyframeAnimation? {
+        
+        guard let src = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
+        let frameCount = CGImageSourceGetCount(src)
+        
+        // Total loop time
+        var time : Float = 0
+        
+        // Arrays
+        var framesArray = [AnyObject]()
+        var tempTimesArray = [NSNumber]()
+        
+        // Loop
+        for i in 0..<frameCount {
+            
+            // Frame default duration
+            var frameDuration : Float = 0.1;
+            
+            let cfFrameProperties = CGImageSourceCopyPropertiesAtIndex(src, i, nil)
+            guard let framePrpoerties = cfFrameProperties as? [String:AnyObject] else {return nil}
+            guard let gifProperties = framePrpoerties[kCGImagePropertyGIFDictionary as String] as? [String:AnyObject]
+                else { return nil }
+            
+            // Use kCGImagePropertyGIFUnclampedDelayTime or kCGImagePropertyGIFDelayTime
+            if let delayTimeUnclampedProp = gifProperties[kCGImagePropertyGIFUnclampedDelayTime as String] as? NSNumber {
+                frameDuration = delayTimeUnclampedProp.floatValue
+            } else {
+                if let delayTimeProp = gifProperties[kCGImagePropertyGIFDelayTime as String] as? NSNumber {
+                    frameDuration = delayTimeProp.floatValue
+                }
+            }
+            
+            // Make sure its not too small
+            if frameDuration < 0.011 {
+                frameDuration = 0.100;
+            }
+            
+            // Add frame to array of frames
+            if let frame = CGImageSourceCreateImageAtIndex(src, i, nil) {
+                tempTimesArray.append(NSNumber(value: frameDuration))
+                framesArray.append(frame)
+            }
+            
+            // Compile total loop time
+            time = time + frameDuration
+        }
+        
+        var timesArray = [NSNumber]()
+        var base : Float = 0
+        for duration in tempTimesArray {
+            timesArray.append(NSNumber(value: base))
+            base += ( duration.floatValue / time )
+        }
+        
+        // From documentation of 'CAKeyframeAnimation':
+        // the first value in the array must be 0.0 and the last value must be 1.0.
+        // The array should have one more entry than appears in the values array.
+        // For example, if there are two values, there should be three key times.
+        timesArray.append(NSNumber(value: 1.0))
+        
+        // Create animation
+        let animation = CAKeyframeAnimation(keyPath: "contents")
+        
+        animation.beginTime = AVCoreAnimationBeginTimeAtZero
+        animation.duration = CFTimeInterval(time)
+        animation.repeatCount = Float.greatestFiniteMagnitude;
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = CAMediaTimingFillMode.forwards
+        animation.values = framesArray
+        animation.keyTimes = timesArray
+        //animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.calculationMode = CAAnimationCalculationMode.discrete
+        
+        return animation;
+    }*/
+    
+    /*func addCar(x: Float = 0, y: Float = 0, z: Float = -0.5) {
+        guard let carScene = SCNScene(named: "plane.scn") else { return }
         let carNode = SCNNode()
         let carSceneChildNodes = carScene.rootNode.childNodes
         for childNode in carSceneChildNodes {
@@ -387,14 +598,32 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         carNode.position = SCNVector3(x, y, z)
         carNode.scale = SCNVector3(0.5, 0.5, 0.5)
-        //sceneView.scene.rootNode.addChildNode(carNode)
-        return carNode
-    }
+        sceneView.scene.rootNode.addChildNode(carNode)
+        //return carNode
+    }*/
+    
+    /*func existingWishList() -> DarwinBoolean {
+        var dataFromDB: [String: Any] = [:]
+        ref.childByAutoId().observeSingleEvent(of: .value){ (snapshot) in
+            dataFromDB = (snapshot.value as?  [String: Any])!
+            
+        }
+        
+        if pokeNameIdentificado = dataFromDB["code"] as! String {
+            return true
+        }
+        
+        return false
+        
+    }*/
     
     private func makeDinosaurVideo(size: CGSize) -> SCNNode? {
+        sceneView.backgroundColor = .clear
+        //sceneView.scaleMode = .aspectFit
+        
         // 1
-        guard let videoURL = Bundle.main.url(forResource: "dinosaur",
-                                             withExtension: "mp4") else {
+        guard let videoURL = Bundle.main.url(forResource: "model"/*"dinosaur"*/,
+                                             withExtension: "dae"/*"mp4"*/) else {
                                                 return nil
         }
         
@@ -414,6 +643,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // 4
         let avMaterial = SCNMaterial()
+        //let animation = SCNAnimation(named: "plane.scn")
+        //avMaterial.diffuse.addAnimation(animation, forKey: "xerneas")
         avMaterial.diffuse.contents = avPlayer
         
         // 5
