@@ -306,13 +306,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         wishListButton.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDown)
         popupView.addSubview(wishListButton)
         wishListButton.centerXAnchor.constraint(equalTo: popupView.centerXAnchor).isActive = true
-        wishListButton.topAnchor.constraint(equalTo: attackInfo2Label.bottomAnchor, constant: 40).isActive = true
+        
+        /*if (pokemon!.attacks.count > 1) {
+            wishListButton.topAnchor.constraint(equalTo: attackInfo2Label.bottomAnchor, constant: 40).isActive = true
+        }else{*/
+            wishListButton.topAnchor.constraint(equalTo: attackInfo1Label.bottomAnchor, constant: 150).isActive = true
+        //}
     }
-    
     
     @objc func buttonTouched(_ button: UIButton) {
         print("boop")
-        ref.child(pokeNameIdentificado!).setValue(["name": pokemon!.name])
+        ref.child(pokeNameIdentificado!).setValue(["name": pokemon!.name, "id": pokeNameIdentificado!])
         self.wishListButton.isHidden = true
     }
     

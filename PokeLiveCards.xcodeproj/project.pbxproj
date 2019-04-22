@@ -15,6 +15,8 @@
 		E2276D2B226D5C0B0084A84D /* Xerneas in Resources */ = {isa = PBXBuildFile; fileRef = E2276D2A226D5C0B0084A84D /* Xerneas */; };
 		E2276D2D226D5CC40084A84D /* model.dae in Resources */ = {isa = PBXBuildFile; fileRef = E2276D2C226D5CC00084A84D /* model.dae */; };
 		E2276D2F226D61E10084A84D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E2276D2E226D61E00084A84D /* logo.png */; };
+		E2294FA4226DCBD800BA1A1E /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2294FA3226DCBD800BA1A1E /* TableViewController.swift */; };
+		E2294FA6226DCBF500BA1A1E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2294FA5226DCBF500BA1A1E /* TableViewCell.swift */; };
 		E2331AFA225D115200F2DF4F /* FindPokeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */; };
 		E2A8F3D622688509007C75D6 /* dinosaur.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E2A8F3D5226882F3007C75D6 /* dinosaur.mp4 */; };
 		E2C15065225AF1E300927F98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C15064225AF1E300927F98 /* AppDelegate.swift */; };
@@ -37,6 +39,8 @@
 		E2276D2A226D5C0B0084A84D /* Xerneas */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Xerneas; sourceTree = "<group>"; };
 		E2276D2C226D5CC00084A84D /* model.dae */ = {isa = PBXFileReference; lastKnownFileType = text.xml.dae; path = model.dae; sourceTree = "<group>"; };
 		E2276D2E226D61E00084A84D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		E2294FA3226DCBD800BA1A1E /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		E2294FA5226DCBF500BA1A1E /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPokeViewController.swift; sourceTree = "<group>"; };
 		E2A8F3D5226882F3007C75D6 /* dinosaur.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dinosaur.mp4; sourceTree = "<group>"; };
 		E2C15061225AF1E300927F98 /* PokeLiveCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeLiveCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +113,8 @@
 				E2A8F3D5226882F3007C75D6 /* dinosaur.mp4 */,
 				E224222C226849FD0040F1D6 /* Pokemon.swift */,
 				E2C1506A225AF1E300927F98 /* Main.storyboard */,
+				E2294FA3226DCBD800BA1A1E /* TableViewController.swift */,
+				E2294FA5226DCBF500BA1A1E /* TableViewCell.swift */,
 				E2331AF9225D115200F2DF4F /* FindPokeViewController.swift */,
 				E220D96C2267BD7F0065766A /* CardItem.swift */,
 				E2C1506D225AF1ED00927F98 /* Assets.xcassets */,
@@ -266,9 +272,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E224222D226849FD0040F1D6 /* Pokemon.swift in Sources */,
+				E2294FA4226DCBD800BA1A1E /* TableViewController.swift in Sources */,
 				E2C15069225AF1E300927F98 /* ViewController.swift in Sources */,
 				E2331AFA225D115200F2DF4F /* FindPokeViewController.swift in Sources */,
 				E220D96D2267BD7F0065766A /* CardItem.swift in Sources */,
+				E2294FA6226DCBF500BA1A1E /* TableViewCell.swift in Sources */,
 				E2C15065225AF1E300927F98 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
