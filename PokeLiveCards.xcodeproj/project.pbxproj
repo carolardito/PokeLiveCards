@@ -25,6 +25,7 @@
 		E2C1506C225AF1E300927F98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2C1506A225AF1E300927F98 /* Main.storyboard */; };
 		E2C1506E225AF1ED00927F98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C1506D225AF1ED00927F98 /* Assets.xcassets */; };
 		E2C15071225AF1ED00927F98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2C1506F225AF1ED00927F98 /* LaunchScreen.storyboard */; };
+		E2F87361226E9FF400D57C5F /* DataFromDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F87360226E9FF400D57C5F /* DataFromDB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		E2C1506D225AF1ED00927F98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2C15070225AF1ED00927F98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2C15072225AF1ED00927F98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2F87360226E9FF400D57C5F /* DataFromDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFromDB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				E2276D26226D47530084A84D /* xerneas.gif */,
 				E2A8F3D5226882F3007C75D6 /* dinosaur.mp4 */,
 				E224222C226849FD0040F1D6 /* Pokemon.swift */,
+				E2F87360226E9FF400D57C5F /* DataFromDB.swift */,
 				E2C1506A225AF1E300927F98 /* Main.storyboard */,
 				E2294FA3226DCBD800BA1A1E /* TableViewController.swift */,
 				E2294FA5226DCBF500BA1A1E /* TableViewCell.swift */,
@@ -278,6 +281,7 @@
 				E220D96D2267BD7F0065766A /* CardItem.swift in Sources */,
 				E2294FA6226DCBF500BA1A1E /* TableViewCell.swift in Sources */,
 				E2C15065225AF1E300927F98 /* AppDelegate.swift in Sources */,
+				E2F87361226E9FF400D57C5F /* DataFromDB.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

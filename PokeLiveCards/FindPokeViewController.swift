@@ -99,34 +99,45 @@ func findInfoPoke(completion : @escaping ()->()){
             do {
                 let json = try JSON(data:response.data!)
                 
-                print("CAROL - COUNT ATTACKS = \(json["card"]["attacks"].count)")
+                let supertype = json["card"]["supertype"]
                 
-                var attacks: [JSON] = []
+                if (supertype == "Pokémon") {
                 
-                for attack in json["card"]["attacks"] {
-                     print("CAROL - ATTACK = \(attack)")
+                    print("CAROL - COUNT ATTACKS = \(json["card"]["attacks"].count)")
                     
-                    attacks.append(attack.1)
+                    var attacks: [JSON] = []
                     
-                    //let help: "\(attack["name"])"
-                    //attacks.append(help)
+                    for attack in json["card"]["attacks"] {
+                         print("CAROL - ATTACK = \(attack)")
+                        
+                        attacks.append(attack.1)
+                        
+                        //let help: "\(attack["name"])"
+                        //attacks.append(help)
+                    }
+                    
+                    print("CAROL - ATTACK/HELP 0 = \(attacks[0])")
+                    
+                    pokemon = Pokemon(
+                        name: "\(json["card"]["name"])",
+                        hp: "\(json["card"]["hp"])",
+                        attacks: attacks,
+                        attack1: "\(json["card"]["attacks"][0]["name"])",
+                        damage1: "\(json["card"]["attacks"][0]["damage"])",
+                        attackInfo1: "\(json["card"]["attacks"][0]["text"])",
+                        attack2: "\(json["card"]["attacks"][1]["name"])",
+                        damage2: "\(json["card"]["attacks"][1]["damage"])",
+                        attackInfo2: "\(json["card"]["attacks"][1]["text"])",
+                        pokeCardImg: "\(pokeNameIdentificado!)"
+                    )
+                }else{
+                    card = CardItem(
+                        id: pokeNameIdentificado!,
+                        name: "\(json["card"]["name"])",
+                        subtype: "\(json["card"]["subtype"])",
+                        text: "\(json["card"]["text"])"
+                    )
                 }
-                
-                print("CAROL - ATTACK/HELP 0 = \(attacks[0])")
-                
-                pokemon = Pokemon(
-                    name: "\(json["card"]["name"])",
-                    hp: "\(json["card"]["hp"])",
-                    attacks: attacks,
-                    attack1: "\(json["card"]["attacks"][0]["name"])",
-                    damage1: "\(json["card"]["attacks"][0]["damage"])",
-                    attackInfo1: "\(json["card"]["attacks"][0]["text"])",
-                    attack2: "\(json["card"]["attacks"][1]["name"])",
-                    damage2: "\(json["card"]["attacks"][1]["damage"])",
-                    attackInfo2: "\(json["card"]["attacks"][1]["text"])",
-                    pokeCardImg: "\(pokeNameIdentificado!)"
-                )
-                
             }
             catch {
                 print ("Error while parsing JSON response")

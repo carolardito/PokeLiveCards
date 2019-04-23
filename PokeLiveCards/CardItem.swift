@@ -6,22 +6,21 @@
 //  Copyright © 2019 Carolini Freire Ardito Tavares. All rights reserved.
 //
 
-/*import Foundation
-import Firebase
+import Foundation
+import SwiftyJSON
+ 
+ class CardItem {
+ 
+     var id: String
+     var name: String
+     var subtype: String
+     var text: String
+    
+     init(id: String, name: String, subtype: String, text: String) {
+         self.id = id
+         self.name = name
+         self.subtype = subtype
+         self.text = text
+     }
+ }
 
-struct Cards {
-    let ref: DatabaseReference?
-    let key: String
-    let name: String
-    
-    init(name: String) {
-        self.ref = nil
-        self.name = name
-    }
-    
-    func toAnyObject() -> Any {
-        return [
-            "name": name
-        ]
-    }
-}*/

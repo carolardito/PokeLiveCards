@@ -8,13 +8,15 @@
 
 import UIKit
 import FirebaseDatabase
+import SwiftyJSON
 
 class TableViewController: UITableViewController {
     
     @IBOutlet var table: UITableView!
     
     let ref = Database.database().reference()
-    var datafromfirebase: [Any] = []
+    var datafromfirebase: JSON?
+    var items: [DataFromDB] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,27 +29,32 @@ class TableViewController: UITableViewController {
         
         /*ref.observe(.value) { snapshot in
             for child in snapshot.children {
+                let help = child as? JSON
                 print("CAROL DB child = \(child)")
-                print("CAROL DB = \(child)")
-                self.datafromfirebase.append(child)
+                print("CAROL DB help= \(help)")
+                //self.datafromfirebase.append(child)
             }
         }*/
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? NSDictionary
-            //let name = value![0]![value]![0]![value]!
+            // 2
+            var newItems: [DataFromDB] = []
             
-            print("CAROL POKE value = \(value)")
-            //print("CAROL POKE NAME = \(name)")
+            // 3
+            for child in snapshot.children {
+                // 4
+                if let snapshot = child as? DataSnapshot,
+                    let groceryItem = DataFromDB(snapshot: snapshot) {
+                    newItems.append(groceryItem)
+                }
+            }
             
-            // ...
+            // 5
+            self.items = newItems
+            self.tableView.reloadData()
+            
         }) { (error) in
             print(error.localizedDescription)
         }
-        
-        print("CAROL DB 2 = \(self.datafromfirebase)")
-        
-        
     }
 
     // MARK: - Table view data source
@@ -59,39 +66,41 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return datafromfirebase.count
+        return items.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myRow", for: indexPath) as! TableViewCell
+        let pokeItem = items[indexPath.row]
         
-        cell.pokemonNameCell.text = "carol"
+        cell.pokemonNameCell.text = pokeItem.name
 
 
         return cell
     }
  
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+ 
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            //tableView.deleteRows(at: [indexPath], with: .fade)
+            let pokeItem = items[indexPath.row]
+            pokeItem.ref?.removeValue()
+            //tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        }
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
