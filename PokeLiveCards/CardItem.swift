@@ -8,7 +8,8 @@
 
 import Foundation
 import SwiftyJSON
- 
+
+//class that stores info from identified trainer card
  class CardItem {
  
      var id: String

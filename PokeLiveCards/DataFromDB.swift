@@ -21,6 +21,7 @@ struct DataFromDB {
         self.name = name
     }
     
+    //use this to convert data from db
     init?(snapshot: DataSnapshot) {
         guard
             let value = snapshot.value as? [String: AnyObject],

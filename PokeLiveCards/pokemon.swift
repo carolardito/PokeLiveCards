@@ -9,6 +9,8 @@
 import Foundation
 import SwiftyJSON
 
+
+//class that stores info from identified pokemon card
 class Pokemon {
     
     var name: String

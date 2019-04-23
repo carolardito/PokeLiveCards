@@ -21,20 +21,7 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        /*ref.observe(.value) { snapshot in
-            for child in snapshot.children {
-                let help = child as? JSON
-                print("CAROL DB child = \(child)")
-                print("CAROL DB help= \(help)")
-                //self.datafromfirebase.append(child)
-            }
-        }*/
+        //section that reads info in firebase to display
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             // 2
             var newItems: [DataFromDB] = []
@@ -80,52 +67,19 @@ class TableViewController: UITableViewController {
         return cell
     }
  
-
-    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
- 
-
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            //tableView.deleteRows(at: [indexPath], with: .fade)
             let pokeItem = items[indexPath.row]
-            pokeItem.ref?.removeValue()
-            //tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+            pokeItem.ref?.removeValue() //delete from firebase
         }
     }
-    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     @IBAction func closeP(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)

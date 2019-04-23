@@ -32,22 +32,12 @@ class FindPokeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print("Poke name identificado = \(pokeNameIdentificado!)")
         if (pokeNameIdentificado != nil) {
             pokeNameTxt.text = pokeNameIdentificado
-            // pokeNameTxt.isEnabled = false
-            //findInfoPoke()
-            //printPokeInfo()
-        }else{
-            //pokeNameTxt.isEnabled = true
         }
-        
-
-        // Do any additional setup after loading the view.
     }
     
     func printPokeInfo(){
-        //self.pokePhoto.image = UIImage(named: pokemon!.pokeCardImg)
         
         self.pokeNameLbl.text = "\(pokemon!.name)"
         self.attack1Lbl.text = "\(pokemon!.attack1)"
@@ -68,19 +58,9 @@ class FindPokeViewController: UIViewController {
     @IBAction func close(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+//this function goes to api and request information about a specific card
 func findInfoPoke(completion : @escaping ()->()){
     //let URL = "https://pokeapi.co/api/v2/pokemon/" + pokeNameTxt.text!
     let URL = "https://api.pokemontcg.io/v1/cards/" + "\(pokeNameIdentificado as! String)"
@@ -97,10 +77,12 @@ func findInfoPoke(completion : @escaping ()->()){
             print(response.data)
             
             do {
+                //reading JSON result
                 let json = try JSON(data:response.data!)
                 
                 let supertype = json["card"]["supertype"]
                 
+                //this API has pokemons and trainers. here will create only the correct one
                 if (supertype == "Pokémon") {
                 
                     print("CAROL - COUNT ATTACKS = \(json["card"]["attacks"].count)")
@@ -111,9 +93,6 @@ func findInfoPoke(completion : @escaping ()->()){
                          print("CAROL - ATTACK = \(attack)")
                         
                         attacks.append(attack.1)
-                        
-                        //let help: "\(attack["name"])"
-                        //attacks.append(help)
                     }
                     
                     print("CAROL - ATTACK/HELP 0 = \(attacks[0])")
